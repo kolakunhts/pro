@@ -1,4 +1,4 @@
-print("=== Hello welcome ===")
+print("======== Hello welcome =========")
 import datetime
 
 # --- ຖານຂໍ້ມູນສິນຄ້າ ---
