@@ -67,7 +67,7 @@ def water_delivery_system():
         print("\n" + "=".center(55, "="))
         print("   🌟 ລະບົບສົ່ງນ້ຳດື່ມ (Full Pricing System) 🌟")
         print("=".center(55, "="))
-        print("1. [ສັ່ງນ້ຳ] | 2. [ຖານຂໍ້ມູນການຂາຍ] | 3. [ອອກ]")
+        print("\f","1. [ສັ່ງນ້ຳ] | 2. [ຖານຂໍ້ມູນການຂາຍ] | 3. [ອອກ]")
         
         main_choice = input("\nເລືອກເມນູ (1-3): ")
 
