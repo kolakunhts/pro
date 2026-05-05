@@ -1,6 +1,6 @@
 import datetime
 
-from t import water_delivery_system
+
 
 def get_alpha_input(prompt):
     while True:
@@ -36,7 +36,7 @@ water_data= {
     "3":{
         "name":"ທິວາລີ",
         "ຕຸກ":{"1":3000,"2":5000,"3":8000},
-        "ແພັກ":{"1":40000,"2":45000,"3":450000}
+        "ແພັກ":{"1":40000,"2":45000,"3":45000}
     },
     "4":{
         "name":"Purra",
@@ -79,9 +79,10 @@ def water_delivery():
                     if brand_choice in water_data:
                         break
                     print("⚠️  ກະລຸນາເລືອກແບຣນ ທີ່ ຖືກໃຫ້ຖືກຕອ້ງ!")
+
                 selected_brand=water_data[brand_choice]
                 while True:
-                    print(f"\ ກະລຸນາເລືອກປະເພດຂອງ '{selected_brand['name']}' ")
+                    print(f"\nກະລຸນາເລືອກປະເພດຂອງ '{selected_brand['name']} ")
                     print("1. ຕຸກ")
                     print("2. ແພັກ")
                     t_choice = input("ເລືອກໝາຍເລກ (1-2): ")
@@ -136,13 +137,13 @@ def water_delivery():
                 print("\n   ຍັງບໍ່ມີຂໍ້ມູນການຂາຍ!")
             else:
                 print("\n" + "📊 " + "—"*45)
-                print(" ประวัติการขาย (Sales History) ")
+                print(" ປະຫວັດການຂາຍ (Sales History) ")
                 print("—"*45)
                 for sale in sales_history:
-                    print(f" ID: {sale['id']:04d} | ลูกค้า: {sale['name']} | เบอร์: {sale['phone']} | ยอดรวม: {sale['total']:,} ກີບ")
+                    print(f" ID: {sale['id']:04d} | ລູກຄ້າ: {sale['name']} | ເບີໂທ: {sale['phone']} | ຍອດລວມ: {sale['total']:,} ກີບ")
                 print("—"*45)
-            input("\nกด Enter เพื่อกลับหน้าเลือก...")
+            input("\n Enter ...")
         elif main_choice=="3":
               print("ກຳລັງປິດລະບົບ... ຂອບໃຈ!"); break
 if __name__ == "__main__":
-    water_delivery_system()
+    water_delivery()
