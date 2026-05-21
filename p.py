@@ -1,441 +1,408 @@
-# print("======== Hello welcome =========")
-# import datetime
-
-# # --- ຖານຂໍ້ມູນສິນຄ້າ ---
-# brands = {"1": "ຫົວເສືອ", "2": "ນ້ຳທີບ", "3": "ທິວາລີ", "4": "Purra", "5": "ນ້ຳສີງ", "6": "ໂຊກທະວີ"}
-# types = {"1": "ຕຸກ", "2": "ແພັກ"}
-# sizes = {
-#     "1": {"name": "ໃຫຍ່", "price": 10},
-#     "2": {"name": "ກາງ", "price": 7},
-#     "3": {"name": "ນ້ອຍ", "price": 5}
-# }
-
-# sales_history = []
-
-# # --- ຟັງຊັນສຳລັບກວດສອບການປ້ອນໂຕເລກ (Error Handling) ---
-# def get_integer_input(prompt):
-#     while True:
-#         user_input = input(prompt)
-#         try:
-#             # ພະຍາຍາມປ່ຽນຄ່າເປັນໂຕເລກຖ້ວນ
-#             return int(user_input)
-#         except ValueError:
-#             # ຖ້າປ່ຽນບໍ່ໄດ້ (ປ້ອນໂຕໜັງສື) ໃຫ້ສະແດງຂໍ້ຄວາມແຈ້ງເຕືອນ
-#             print("⚠️ ແຈ້ງເຕືອນ: ກະລຸນາປ້ອນເປັນ 'ໂຕເລກ' ເທົ່ານັ້ນ!")
-
-# def water_delivery_system():
-#     while True:
-#         print("\n" + "="*45)
-#         print("   🌟 ລະບົບຈັດການການສົ່ງນ້ຳດື່ມ (v1.1) 🌟")
-#         print("="*45)
-#         print("1. [ສັ່ງນ້ຳ] - ເພີ່ມລາຍການໃໝ່")
-#         print("2. [ຖານຂໍ້ມູນ] - ສະຫຼຸບການຂາຍທັງໝົດ")
-#         print("3. [ອອກ] - ອອກຈາກລະບົບ")
-#         print("-" * 45)
-        
-#         main_choice = input("ກະລຸນາເລືອກເມນູ (1-3): ")
-
-#         if main_choice == "1":
-#             print("\n--- 📝 ປ້ອນຂໍ້ມູນລູກຄ້າ ---")
-#             fname = input("ຊື່: ")
-#             lname = input("ນາມສະກຸນ: ")
-#             phone = input("ເບີໂທ: ")
-#             address = input("ສະຖານທີ່ສົ່ງ: ")
-
-#             cart = [] 
-
-#             while True:
-#                 print("\n--- 📦 ເລືອກແບຣນນ້ຳດື່ມ ---")
-#                 for k, v in brands.items():
-#                     print(f"{k}. {v}")
-#                 b_choice = input("ເລືອກໝາຍເລກແບຣນ: ")
-                
-#                 print("\n--- 💧 ເລືອກປະເພດ ---")
-#                 for k, v in types.items():
-#                     print(f"{k}. {v}")
-#                 t_choice = input("ເລືອກໝາຍເລກປະເພດ: ")
-
-#                 print("\n--- 📏 ເລືອກຂະໜາດ ---")
-#                 for k, v in sizes.items():
-#                     print(f"{k}. {v['name']} ({v['price']} ກີບ)")
-#                 s_choice = input("ເລືອກໝາຍເລກຂະໜາດ: ")
-
-#                 if b_choice in brands and t_choice in types and s_choice in sizes:
-#                     # ໃຊ້ຟັງຊັນ get_integer_input ເພື່ອກວດສອບຈຳນວນ
-#                     qty = get_integer_input(f"ຕ້ອງການຈຳນວນຈັກ {types[t_choice]}?: ")
-                    
-#                     item_total = sizes[s_choice]['price'] * qty
-#                     cart.append({
-#                         "brand": brands[b_choice],
-#                         "type": types[t_choice],
-#                         "size": sizes[s_choice]['name'],
-#                         "unit_price": sizes[s_choice]['price'],
-#                         "qty": qty,
-#                         "total": item_total
-#                     })
-#                 else:
-#                     print("❌ ໝາຍເລກທີ່ເຈົ້າເລືອກບໍ່ມີໃນລະບົບ, ກະລຸນາເລືອກໃໝ່!")
-
-#                 cont = input("\nຕ້ອງການເພີ່ມລາຍການອື່ນອີກບໍ່? (y/n): ").lower()
-#                 if cont != 'y':
-#                     break
-
-#             # --- ຄິດໄລ່ ແລະ ອອກບິນ ---
-#             if cart:
-#                 order_id = len(sales_history) + 1
-#                 now = datetime.datetime.now().strftime("%d/%m/%Y %H:%M")
-#                 sub_total = sum(item['total'] for item in cart)
-#                 grand_total = sub_total # ປັບແຕ່ງສ່ວນຫຼຸດເພີ່ມໄດ້ບ່ອນນີ້
-
-#                 print("\n" + "🧾 " + "—"*35)
-#                 print(f"       ບິນຮັບເງິນ ID: {order_id:04d}")
-#                 print(f" ວັນທີ: {now}")
-#                 print(f" ລູກຄ້າ: {fname} {lname}")
-#                 print(" " + "-"*35)
-#                 for i in cart:
-#                     print(f" • {i['brand']} ({i['type']}{i['size']})")
-#                     print(f"   {i['qty']} x {i['unit_price']} = {i['total']} ກີບ")
-#                 print(" " + "-"*35)
-#                 print(f" ລວມສຸດທິ:     {grand_total} ກີບ")
-#                 print("—"*35)
-
-#                 sales_history.append({
-#                     "order_id": order_id,
-#                     "customer": f"{fname} {lname}",
-#                     "total": grand_total
-#                 })
-            
-#             input("\nກົດ Enter ເພື່ອກັບຄືນເມນູຫຼັກ...")
-
-#         elif main_choice == "2":
-#             print("\n📊 ຖານຂໍ້ມູນການຂາຍຊົ່ວຄາວ:")
-#             if not sales_history:
-#                 print("ຍັງບໍ່ມີຂໍ້ມູນ.")
-#             else:
-#                 for s in sales_history:
-#                     print(f"ID: {s['order_id']:04d} | {s['customer']} | {s['total']} ກີບ")
-#             input("\nກົດ Enter ເພື່ອກັບຄືນ...")
-
-#         elif main_choice == "3":
-#             print("ປິດລະບົບ...")
-#             break
-
-# if __name__ == "__main__":
-#     water_delivery_system()
-
-#ພາກການກຳນົດcllaບໍ່ໃຫ້ມັນbugເເລະerro
-print("======== Hello welcome =========")
-def get_alpha_input(prompt):
-    while True:
-        user=input(prompt).strip()
-        if user.isalpha() and user !="":
-            return user
-        print(" ກະລຸນາປອ້ນຊື່ຕົນເອງ")
-def get_phone_input(prompt):
-    while True:
-        user = input(prompt).strip()
-
-        if user.isdigit() and len(user) >= 7:
-            return user
-
-        print("ກະລຸນາປ້ອນເບີໂທໃຫ້ຖືກຕ້ອງ!")
-def get_integer_input(prompt):
-    while True:
-        try:
-            val = int(input(prompt))
-
-            if val > 0:
-                return val
-
-            print("ຈຳນວນຕ້ອງຫຼາຍກວ່າ 0!")
-
-        except ValueError:
-            print("ກະລຸນາປ້ອນເປັນໂຕເລກເທົ່ານັ້ນ!")
+# ============================================================
+# ລະບົບສູນສົ່ງນ້ຳທຸກປະເພດ
+# ໂປຣແກຣມນີ້ໃຊ້ສຳລັບ:
+# 1. ຮັບຊື່ ແລະ ນາມສະກຸນລູກຄ້າ
+# 2. ໃຫ້ລູກຄ້າເລືອກສິນຄ້າຕາມໝວດໝູ່
+# 3. ຄິດໄລ່ລາຄາ, ສ່ວນຫຼຸດ, ແລະ ອອກໃບບິນ
+# ============================================================
 
 
-#ພາສວ່ນຂໍ້ມູນຂອງລະບົບ
-water_data = {
-    "1": {
-        "name": "ຫົວເສືອ",
-        "ຕຸກ": {"1": 4000, "2": 7000, "3": 10000},
-        "ແພັກ": {"1": 50000, "2": 45000, "3": 45000}
+# ------------------------------------------------------------
+# ສ່ວນທີ 1: ຂໍ້ມູນສິນຄ້າ
+# PRODUCTS ເປັນ dictionary ໃຫຍ່ທີ່ເກັບ:
+# - ໝວດໝູ່ສິນຄ້າ: ເບຍ, ນ້ຳອັດລົມ, ນ້ຳດື່ມ
+# - ຊື່ສິນຄ້າໃນແຕ່ລະໝວດ
+# - ປະເພດພາຊະນະ: ຕຸກ, ປອ໋ງ, ແກ້ວ, ແພັກ
+# - ຂະໜາດ ແລະ ລາຄາ
+# ------------------------------------------------------------
+PRODUCTS = {
+    "ເບຍ": {
+        "ເບຍລາວ": {
+            "ປອ໋ງ": {"ນ້ອຍ": 290000, "ກາງ": 330000},
+            "ແກ້ວ": {"ມາດຕະຖານ": 210000},
+        },
+        "ເບຍນ້ຳຂອງ": {
+            "ປອ໋ງ": {"ນ້ອຍ": 270000, "ກາງ": 310000},
+            "ແກ້ວ": {"ມາດຕະຖານ": 200000},
+        },
+        "ເບຍລ້ານຊ້າງ": {
+            "ປອ໋ງ": {"ນ້ອຍ": 300000, "ກາງ": 340000},
+            "ແກ້ວ": {"ມາດຕະຖານ": 220000},
+        },
+        "ເບຍໂຄ້ດເບີກ": {
+            "ປອ໋ງ": {"ນ້ອຍ": 360000, "ກາງ": 410000},
+            "ແກ້ວ": {"ມາດຕະຖານ": 260000},
+        },
+        "ເບຍ1664ແບນ": {
+            "ປອ໋ງ": {"ນ້ອຍ": 420000, "ກາງ": 480000},
+            "ແກ້ວ": {"ມາດຕະຖານ": 300000},
+        },
+        "ເບຍໄຫເນີເກັນ": {
+            "ປອ໋ງ": {"ນ້ອຍ": 390000, "ກາງ": 450000},
+            "ແກ້ວ": {"ມາດຕະຖານ": 290000},
+        },
+        "ເບຍຫຼວງພະບາງ": {
+            "ປອ໋ງ": {"ນ້ອຍ": 310000, "ກາງ": 350000},
+            "ແກ້ວ": {"ມາດຕະຖານ": 230000},
+        },
     },
-
-    "2": {
-        "name": "ນ້ຳທີບ",
-        "ຕຸກ": {"1": 4000, "2": 6000, "3": 9000},
-        "ແພັກ": {"1": 40000, "2": 45000, "3": 45000}
+    "ນ້ຳອັດລົມ": {
+        "ແປບຊີ": {
+            "ຕຸກ": {"ນ້ອຍ": 85000, "ກາງ": 115000, "ໃຫຍ່": 145000},
+            "ປອ໋ງ": {"ນ້ອຍ": 120000, "ກາງ": 160000},
+            "ແກ້ວ": {"ນ້ອຍ": 90000, "ກາງ": 120000},
+        },
+        "ໂຄຄາໂຄລາ": {
+            "ຕຸກ": {"ນ້ອຍ": 90000, "ກາງ": 120000, "ໃຫຍ່": 150000},
+            "ປອ໋ງ": {"ນ້ອຍ": 125000, "ກາງ": 165000},
+            "ແກ້ວ": {"ນ້ອຍ": 95000, "ກາງ": 125000},
+        },
+        "ເຊເວັນອັບ": {
+            "ຕຸກ": {"ນ້ອຍ": 85000, "ກາງ": 110000, "ໃຫຍ່": 140000},
+            "ປອ໋ງ": {"ນ້ອຍ": 115000, "ກາງ": 150000},
+            "ແກ້ວ": {"ນ້ອຍ": 90000, "ກາງ": 115000},
+        },
+        "ແຟນຕ້າ": {
+            "ຕຸກ": {"ນ້ອຍ": 85000, "ກາງ": 110000, "ໃຫຍ່": 140000},
+            "ປອ໋ງ": {"ນ້ອຍ": 115000, "ກາງ": 150000},
+            "ແກ້ວ": {"ນ້ອຍ": 90000, "ກາງ": 115000},
+        },
+        "ສະໄປ໋": {
+            "ຕຸກ": {"ນ້ອຍ": 85000, "ກາງ": 110000, "ໃຫຍ່": 140000},
+            "ປອ໋ງ": {"ນ້ອຍ": 115000, "ກາງ": 150000},
+            "ແກ້ວ": {"ນ້ອຍ": 90000, "ກາງ": 115000},
+        },
+        "ສະຕີງ": {
+            "ຕຸກ": {"ນ້ອຍ": 120000},
+            "ປອ໋ງ": {"ນ້ອຍ": 135000},
+            "ແກ້ວ": {"ນ້ອຍ": 110000},
+        },
+        "M150": {
+            "ຕຸກ": {"ນ້ອຍ": 130000},
+            "ປອ໋ງ": {"ນ້ອຍ": 145000},
+            "ແກ້ວ": {"ນ້ອຍ": 120000},
+        },
+        "ກະທີງແດງ": {
+            "ຕຸກ": {"ນ້ອຍ": 130000},
+            "ປອ໋ງ": {"ນ້ອຍ": 145000},
+            "ແກ້ວ": {"ນ້ອຍ": 120000},
+        },
+        "ສະປອນເຊີ": {
+            "ຕຸກ": {"ນ້ອຍ": 125000},
+            "ປອ໋ງ": {"ນ້ອຍ": 140000},
+            "ແກ້ວ": {"ນ້ອຍ": 115000},
+        },
     },
-
-    "3": {
-        "name": "ທິວາລີ",
-        "ຕຸກ": {"1": 3000, "2": 5000, "3": 8000},
-        "ແພັກ": {"1": 40000, "2": 45000, "3": 45000}
+    "ນ້ຳດື່ມ": {
+        "ນ້ຳດື່ມຫົວເສືອ": {"ແພັກ": {"ນ້ອຍ": 35000, "ກາງ": 45000, "ໃຫຍ່": 55000}},
+        "ນ້ຳດື່ມດາວ": {"ແພັກ": {"ນ້ອຍ": 32000, "ກາງ": 42000, "ໃຫຍ່": 52000}},
+        "ນ້ຳທີບ": {"ແພັກ": {"ນ້ອຍ": 33000, "ກາງ": 43000, "ໃຫຍ່": 53000}},
+        "ນ້ຳດື່ມມີເນໂລ": {"ແພັກ": {"ນ້ອຍ": 36000, "ກາງ": 46000, "ໃຫຍ່": 56000}},
+        "ນ້ຳດື່ມໂຊກທະວີ": {"ແພັກ": {"ນ້ອຍ": 30000, "ກາງ": 40000, "ໃຫຍ່": 50000}},
+        "ນ້ຳດື່ມມີລາ": {"ແພັກ": {"ນ້ອຍ": 34000, "ກາງ": 44000, "ໃຫຍ່": 54000}},
     },
-
-    "4": {
-        "name": "Purra",
-        "ຕຸກ": {"1": 6000, "2": 12000, "3": 20000},
-        "ແພັກ": {"1": 60000, "2": 55000, "3": 60000}
-    },
-
-    "5": {
-        "name": "ນ້ຳສີງ",
-        "ຕຸກ": {"1": 5000, "2": 10000, "3": 15000},
-        "ແພັກ": {"1": 60000, "2": 65000, "3": 65000}
-    },
-
-    "6": {
-        "name": "ໂຊກທະວີ",
-        "ຕຸກ": {"1": 3000, "2": 5000, "3": 8000},
-        "ແພັກ": {"1": 42000, "2": 40000, "3": 40000}
-    }
 }
-size_mapping={
-    "1": "ນ້ອຍ",
-    "2": "ກາງ",
-    "3": "ໃຫຍ່"
-}
-#ພາກສວ່ນເກັບຂໍ້ມູນໃນລະບົບ
-sales_history = []
 
-#ການກຳນົດcllaໃຫ້ລະບົບ
-def water_delivery():
+
+# ------------------------------------------------------------
+# ສ່ວນທີ 2: ຄ່າເມນູທີ່ໃຊ້ຊ້ຳ
+# ການແຍກອອກມາແບບນີ້ເຮັດໃຫ້ແກ້ຂໍ້ຄວາມເມນູໄດ້ງ່າຍ.
+# ------------------------------------------------------------
+VIEW_MODES = ["ແບນ/ສະແດງສິນຄ້າທັງໝົດ", "ໝວດໝູ່"]
+PACKAGE_OPTIONS = ["ແພັກ", "ແກັດ", "ລາງ"]
+
+
+# ------------------------------------------------------------
+# ສ່ວນທີ 3: ຟັງຊັນຊ່ວຍທົ່ວໄປ
+# ຟັງຊັນໃນສ່ວນນີ້ໃຊ້ຊ້ຳຫຼາຍຈຸດ ເພື່ອກັນ error.
+# ------------------------------------------------------------
+def money(amount):
+    """ແປງຕົວເລກເງິນໃຫ້ມີ comma ແລະ ຕໍ່ທ້າຍດ້ວຍຄຳວ່າ ກີບ."""
+    return f"{amount:,.0f} ກີບ"
+
+
+def input_not_empty(message):
+    """ຮັບຂໍ້ຄວາມຈາກຜູ້ໃຊ້ ແລະ ບໍ່ອະນຸຍາດໃຫ້ປ່ອຍວ່າງ."""
+    while True:
+        value = input(message).strip()
+        if value:
+            return value
+        print("ກະລຸນາປ້ອນຂໍ້ມູນ ຫ້າມປ່ອຍວ່າງ.")
+
+
+def choose_from_list(title, options):
+    """ສະແດງເມນູຕາມ list ແລ້ວບັງຄັບໃຫ້ເລືອກເລກທີ່ຖືກຕ້ອງ."""
+    while True:
+        print(f"\n{title}")
+        for i, option in enumerate(options, start=1):
+            print(f"{i}. {option}")
+
+        choice = input("ເລືອກເລກ: ").strip()
+        if not choice.isdigit():
+            print("ກະລຸນາໃສ່ເປັນຕົວເລກ.")
+            continue
+
+        index = int(choice)
+        if 1 <= index <= len(options):
+            return options[index - 1]
+
+        print(f"ກະລຸນາເລືອກ 1 ຫາ {len(options)}.")
+
+
+def choose_size_with_price(title, size_prices, unit_name):
+    """ສະແດງຂະໜາດພ້ອມລາຄາຕໍ່ຫົວໜ່ວຍ ແລ້ວສົ່ງຂະໜາດທີ່ເລືອກກັບຄືນ."""
+    sizes = list(size_prices.keys())
 
     while True:
+        print(f"\n{title}")
+        for i, size in enumerate(sizes, start=1):
+            price = size_prices[size]
+            print(f"{i}. {size} - {money(price)}/{unit_name}")
 
-        print("\n" + "=" * 55)
-        print("        💧 WELCOME TO WATER SYSTEM 💧")
-        print("=" * 55)
+        choice = input("ເລືອກເລກ: ").strip()
+        if not choice.isdigit():
+            print("ກະລຸນາໃສ່ເປັນຕົວເລກ.")
+            continue
 
-        print("1. ສັ່ງນ້ຳ")
-        print("2. ປະຫວັດການຂາຍ")
-        print("3. ອອກຈາກລະບົບ")
+        index = int(choice)
+        if 1 <= index <= len(sizes):
+            return sizes[index - 1]
 
-        main_choice = input("\nເລືອກເມນູ (1-3): ")
+        print(f"ກະລຸນາເລືອກ 1 ຫາ {len(sizes)}.")
 
-        # =========================
-        # ORDER
-        # =========================
 
-        if main_choice == "1":
+def input_quantity(unit_name):
+    """ຮັບຈຳນວນສິນຄ້າຕາມຫົວໜ່ວຍ ໂດຍຕ້ອງເປັນຕົວເລກ ແລະ ຫຼາຍກວ່າ 0."""
+    while True:
+        value = input(f"ປ້ອນຈຳນວນ{unit_name}: ").strip()
+        if not value.isdigit():
+            print("ຈຳນວນຕ້ອງເປັນຕົວເລກ.")
+            continue
 
-            print("\n===== ຂໍ້ມູນລູກຄ້າ =====")
+        quantity = int(value)
+        if quantity > 0:
+            return quantity
 
-            customer_name = get_alpha_input("ຊື່: ")
-            customer_lname = get_alpha_input("ນາມສະກຸນ: ")
-            phone = get_phone_input("ເບີໂທ: ")
-            address = input("ທີ່ຢູ່: ")
+        print("ຈຳນວນຕ້ອງຫຼາຍກວ່າ 0.")
 
-            cart = []
 
-            while True:
+def ask_yes_no(message):
+    """ຖາມຄຳຖາມທີ່ຕອບໄດ້ພຽງ y ຫຼື n ເທົ່ານັ້ນ."""
+    while True:
+        answer = input(message).strip().lower()
+        if answer in ("y", "n"):
+            return answer
+        print("ກະລຸນາກົດ y ຫຼື n ເທົ່ານັ້ນ.")
 
-                # =========================
-                # BRAND
-                # =========================
 
-                while True:
+# ------------------------------------------------------------
+# ສ່ວນທີ 4: ຟັງຊັນສຳລັບສະແດງ ແລະ ເລືອກສິນຄ້າ
+# ------------------------------------------------------------
+def show_all_products():
+    """ສະແດງລາຍຊື່ສິນຄ້າທັງໝົດໃນສາງ ໂດຍກຳນົດເລກໃຫ້ແຕ່ລະສິນຄ້າ."""
+    all_products = []
+    print("\nລາຍການສິນຄ້າທັງໝົດໃນສາງ")
 
-                    print("\n===== ເລືອກແບຣນນ້ຳ =====")
+    for category, products in PRODUCTS.items():
+        print(f"\n{category}")
+        for name in products.keys():
+            all_products.append({"category": category, "name": name})
+            print(f"{len(all_products)}. {name}")
 
-                    for k, v in water_data.items():
-                        print(f"{k}. {v['name']}")
+    return all_products
 
-                    brand_choice = input("ເລືອກແບຣນ (1-6): ")
 
-                    if brand_choice in water_data:
-                        break
+def choose_from_all_products():
+    """ໃຫ້ລູກຄ້າເລືອກສິນຄ້າຈາກລາຍການທັງໝົດດ້ວຍເລກລຳດັບ."""
+    all_products = show_all_products()
 
-                    print("⚠️  ກະລຸນາເລືອກໃຫ້ຖືກຕ້ອງ!")
+    while True:
+        choice = input("\nເລືອກເລກສິນຄ້າ: ").strip()
+        if not choice.isdigit():
+            print("ກະລຸນາໃສ່ເປັນຕົວເລກ.")
+            continue
 
-                selected_brand = water_data[brand_choice]
+        index = int(choice)
+        if 1 <= index <= len(all_products):
+            selected = all_products[index - 1]
+            return selected["category"], selected["name"]
 
-                # =========================
-                # TYPE
-                # =========================
+        print(f"ກະລຸນາເລືອກ 1 ຫາ {len(all_products)}.")
 
-                while True:
 
-                    print(f"\n===== {selected_brand['name']} =====")
-                    print("1. ຕຸກ")
-                    print("2. ແພັກ")
+def choose_product():
+    """ໃຫ້ລູກຄ້າເລືອກສິນຄ້າ 1 ລາຍການ ແລ້ວສົ່ງຂໍ້ມູນ order ກັບຄືນ."""
+    view_mode = choose_from_list(
+        "ຂັ້ນຕອນທີ 2: ເລືອກວິທີສະແດງສິນຄ້າ",
+        VIEW_MODES,
+    )
 
-                    t_choice = input("ເລືອກ (1-2): ")
+    if view_mode == "ແບນ/ສະແດງສິນຄ້າທັງໝົດ":
+        # ໂໝດນີ້ຈະສະແດງສິນຄ້າທຸກອັນພ້ອມເລກລຳດັບ
+        # ແລະໃຫ້ເລືອກສິນຄ້າຈາກເລກນັ້ນໂດຍກົງ.
+        category, product_name = choose_from_all_products()
+    else:
+        # ໂໝດນີ້ເລືອກຕາມໝວດໝູ່ກ່ອນ ແລ້ວຈຶ່ງເລືອກສິນຄ້າ.
+        category = choose_from_list(
+            "ເລືອກໝວດໝູ່ສິນຄ້າ",
+            list(PRODUCTS.keys()),
+        )
+        product_name = choose_from_list(
+            f"ເລືອກສິນຄ້າໃນໝວດ {category}",
+            list(PRODUCTS[category].keys()),
+        )
 
-                    if t_choice == "1":
-                        type_key = "ຕຸກ"
-                        break
+    product_data = PRODUCTS[category][product_name]
 
-                    elif t_choice == "2":
-                        type_key = "ແພັກ"
-                        break
+    # ຖ້າເປັນນ້ຳດື່ມ: ຂ້າມການເລືອກປະເພດຕຸກ/ປອ໋ງ/ແກ້ວ
+    # ແລ້ວກຳນົດ package_type ເປັນ "ແພັກ" ອັດຕະໂນມັດ.
+    if category == "ນ້ຳດື່ມ":
+        package_type = "ແພັກ"
+        size = choose_size_with_price(
+            "ຂັ້ນຕອນທີ 4: ເລືອກຂະໜາດນ້ຳດື່ມ",
+            product_data[package_type],
+            package_type,
+        )
+    else:
+        # ເບຍ ແລະ ນ້ຳອັດລົມ ຕ້ອງເລືອກປະເພດພາຊະນະກ່ອນ.
+        product_type = choose_from_list(
+            "ຂັ້ນຕອນທີ 3: ເລືອກບັນຈຸພັນ",
+            list(product_data.keys()),
+        )
 
-                    print("⚠️  ກະລຸນາເລືອກ 1 ຫຼື 2!")
-
-                # =========================
-                # SIZE
-                # =========================
-
-                while True:
-
-                    print(f"\n===== ເລືອກຂະໜາດ ({type_key}) =====")
-
-                    for k, size_name in size_mapping.items():
-
-                        price = selected_brand[type_key][k]
-
-                        print(f"{k}. {size_name} - {price:,} ກີບ")
-
-                    s_choice = input("ເລືອກຂະໜາດ (1-3): ")
-
-                    if s_choice in size_mapping:
-                        break
-
-                    print("⚠️  ກະລຸນາເລືອກ 1-3!")
-
-                # =========================
-                # QTY
-                # =========================
-
-                qty = get_integer_input(
-                    f"ຈຳນວນ {size_mapping[s_choice]} {type_key}: "
-                )
-
-                unit_price = selected_brand[type_key][s_choice]
-
-                total_price = unit_price * qty
-
-                cart.append({
-                    "brand": selected_brand["name"],
-                    "type": type_key,
-                    "size": size_mapping[s_choice],
-                    "qty": qty,
-                    "unit_price": unit_price,
-                    "total": total_price
-                })
-
-                more = input(
-                    "\nຕ້ອງການເພີ່ມສິນຄ້າອີກບໍ່? (y/n): "
-                ).lower()
-
-                if more != "y":
-                    break
-
-            # =========================
-            # BILL
-            # =========================
-
-            if cart:
-
-                order_id = len(sales_history) + 1
-
-                total_all = sum(item["total"] for item in cart)
-
-                now = datetime.datetime.now().strftime("%d/%m/%Y %H:%M")
-
-                print("\n" + "=" * 55)
-                print("                 🧾 ໃບບິນ")
-                print("=" * 55)
-
-                print(f"ID: {order_id:04d}")
-                print(f"ວັນທີ: {now}")
-
-                print(
-                    f"ລູກຄ້າ: {customer_name} {customer_lname}"
-                )
-
-                print(f"ເບີໂທ: {phone}")
-                print(f"ທີ່ຢູ່: {address}")
-
-                print("-" * 55)
-
-                for item in cart:
-
-                    print(
-                        f"{item['brand']} "
-                        f"[{item['type']} - {item['size']}]"
-                    )
-
-                    print(
-                        f"{item['qty']} x "
-                        f"{item['unit_price']:,} "
-                        f"= {item['total']:,} ກີບ"
-                    )
-
-                    print("-" * 55)
-
-                print(f"💰 ລວມທັງໝົດ: {total_all:,} ກີບ")
-
-                print("=" * 55)
-
-                sales_history.append({
-                    "id": order_id,
-                    "name": f"{customer_name} {customer_lname}",
-                    "phone": phone,
-                    "total": total_all
-                })
-
-            input("\nກົດ Enter ເພື່ອກັບເມນູ...")
-
-        # =========================
-        # SALES HISTORY
-        # =========================
-
-        elif main_choice == "2":
-
-            if not sales_history:
-
-                print("\n⚠️  ຍັງບໍ່ມີຂໍ້ມູນການຂາຍ!")
-
+        # ກໍລະນີເບຍແກ້ວມີຂະໜາດດຽວ ຈຶ່ງຂ້າມການເລືອກຂະໜາດ.
+        if category == "ເບຍ" and product_type == "ແກ້ວ":
+            package_type = "ລາງ"
+            size = "ມາດຕະຖານ"
+            print(f"\nຂັ້ນຕອນທີ 4: ຂະໜາດ {size} - {money(product_data[product_type][size])}/{package_type}")
+        else:
+            if category == "ເບຍ" and product_type == "ປອ໋ງ":
+                size_unit = "ແກັດ"
             else:
+                size_unit = "ໜ່ວຍ"
 
-                print("\n" + "=" * 60)
-                print("              📊 ປະຫວັດການຂາຍ")
-                print("=" * 60)
+            size = choose_size_with_price(
+                "ຂັ້ນຕອນທີ 4: ເລືອກຂະໜາດຜະລິດຕະພັນ",
+                product_data[product_type],
+                size_unit,
+            )
 
-                grand_total = 0
+        # ກໍລະນີເບຍ: ກຳນົດປະເພດໄຊ້ໃຫ້ເລີຍຕາມເງື່ອນໄຂ.
+        if category == "ເບຍ" and product_type == "ປອ໋ງ":
+            package_type = "ແກັດ"
+        elif category == "ເບຍ" and product_type == "ແກ້ວ":
+            package_type = "ລາງ"
+        else:
+            # ນ້ຳອັດລົມໃຫ້ຜູ້ໃຊ້ເລືອກ ແພັກ/ແກັດ/ລາງ.
+            package_type = choose_from_list(
+                "ຂັ້ນຕອນທີ 5: ເລືອກປະເພດໄຊ້",
+                PACKAGE_OPTIONS,
+            )
 
-                for sale in sales_history:
+    # ຫາລາຄາຕໍ່ໜ່ວຍຈາກ PRODUCTS ຕາມສິນຄ້າທີ່ເລືອກ.
+    if category == "ນ້ຳດື່ມ":
+        product_type = "ຕຸກ"
+        unit_price = product_data[package_type][size]
+    else:
+        unit_price = product_data[product_type][size]
 
-                    print(
-                        f"ID: {sale['id']:04d} | "
-                        f"{sale['name']} | "
-                        f"{sale['phone']} | "
-                        f"{sale['total']:,} ກີບ"
-                    )
+    quantity = input_quantity(package_type)
+    total = unit_price * quantity
 
-                    grand_total += sale['total']
+    # ສົ່ງຂໍ້ມູນການສັ່ງຊື້ 1 ລາຍການກັບຄືນໄປເກັບໃນ orders.
+    return {
+        "category": category,
+        "name": product_name,
+        "product_type": product_type,
+        "size": size,
+        "package_type": package_type,
+        "unit_price": unit_price,
+        "quantity": quantity,
+        "quantity_text": f"{quantity} {package_type}",
+        "total": total,
+    }
 
-                print("=" * 60)
 
-                print(
-                    f"💰 ມູນຄ່າຂາຍລວມທັງໝົດ: "
-                    f"{grand_total:,} ກີບ"
-                )
+# ------------------------------------------------------------
+# ສ່ວນທີ 5: ຟັງຊັນຄິດໄລ່ລາຄາ ແລະ ພິມໃບບິນ
+# ------------------------------------------------------------
+def discount_rate(total):
+    """ຄືນຄ່າອັດຕາສ່ວນຫຼຸດຕາມຍອດຊື້ລວມ."""
+    if total > 20000000:
+        return 0.10
+    if total >= 10000000:
+        return 0.07
+    if total >= 1000000:
+        return 0.05
+    return 0
 
-                print("=" * 60)
 
-            input("\nກົດ Enter ເພື່ອກັບເມນູ...")
+def print_bill(first_name, last_name, orders):
+    """ສະຫຼຸບລາຍການສັ່ງຊື້, ຄິດສ່ວນຫຼຸດ, ແລະ ພິມໃບບິນ."""
+    subtotal = sum(item["total"] for item in orders)
+    rate = discount_rate(subtotal)
+    discount = subtotal * rate
+    final_total = subtotal - discount
 
-        # =========================
-        # EXIT
-        # =========================
+    print("\n" + "=" * 70)
+    print("ໃບບິນສູນສົ່ງນ້ຳທຸກປະເພດ")
+    print("=" * 70)
+    print(f"ຊື່ລູກຄ້າ: {first_name} {last_name}")
+    print("-" * 70)
+    print(f"{'ລຳດັບ':<6}{'ສິນຄ້າ':<18}{'ປະເພດ':<10}{'ຂະໜາດ':<12}{'ຈຳນວນ':<8}{'ລວມ':>14}")
+    print("-" * 70)
 
-        elif main_choice == "3":
+    for i, item in enumerate(orders, start=1):
+        product_detail = f"{item['product_type']}/{item['package_type']}"
+        print(
+            f"{i:<6}"
+            f"{item['name']:<18}"
+            f"{product_detail:<10}"
+            f"{item['size']:<12}"
+            f"{item['quantity_text']:<8}"
+            f"{money(item['total']):>14}"
+        )
 
-            print("\nກຳລັງປິດລະບົບ...")
-            print("ຂອບໃຈທີ່ໃຊ້ງານ 💧")
+    print("-" * 70)
+    print(f"ລາຄາລວມກ່ອນຫຼຸດ: {money(subtotal)}")
+    print(f"ສ່ວນຫຼຸດ: {int(rate * 100)}% = {money(discount)}")
+    print(f"ລາຄາຕ້ອງຈ່າຍທັງໝົດ: {money(final_total)}")
+    print("=" * 70)
+    print("ຂອບໃຈທີ່ໃຊ້ບໍລິການ")
 
+
+# ------------------------------------------------------------
+# ສ່ວນທີ 6: ຟັງຊັນຫຼັກຂອງໂປຣແກຣມ
+# main() ເປັນຈຸດເລີ່ມຕົ້ນ:
+# - ສະແດງຫົວໂປຣແກຣມ
+# - ຮັບຂໍ້ມູນລູກຄ້າ
+# - ວົນຊ້ຳໃຫ້ຊື້ຫຼາຍລາຍການໄດ້
+# - ພິມໃບບິນເມື່ອລູກຄ້າບໍ່ຊື້ຕໍ່
+# ------------------------------------------------------------
+def main():
+    print("=" * 70)
+    print("ລະບົບສູນສົ່ງນ້ຳທຸກປະເພດ")
+    print("=" * 70)
+
+    print("\nຂັ້ນຕອນທີ 1: ລັອກອິນຂໍ້ມູນລູກຄ້າ")
+    first_name = input_not_empty("ປ້ອນຊື່: ")
+    last_name = input_not_empty("ປ້ອນນາມສະກຸນ: ")
+
+    # orders ໃຊ້ເກັບລາຍການສິນຄ້າທີ່ລູກຄ້າເລືອກທັງໝົດ.
+    orders = []
+    while True:
+        order = choose_product()
+        orders.append(order)
+
+        # ຖ້າຕອບ y ຈະກັບໄປເລືອກສິນຄ້າອີກ,
+        # ຖ້າຕອບ n ຈະອອກຈາກ loop ແລ້ວພິມໃບບິນ.
+        more = ask_yes_no("\nຂັ້ນຕອນທີ 7: ຢາກຊື້ເພີ່ມອີກບໍ່? (y/n): ")
+        if more == "n":
             break
 
-        else:
-            print("⚠️  ກະລຸນາເລືອກ 1-3!")
+    print_bill(first_name, last_name, orders)
 
 
-# =========================
-# RUN PROGRAM
-# =========================
-
+# ຄຳສັ່ງນີ້ເຮັດໃຫ້ main() ຖືກລັນເມື່ອເປີດໄຟລ໌ນີ້ໂດຍກົງ.
 if __name__ == "__main__":
-    water_delivery()
+    main()
