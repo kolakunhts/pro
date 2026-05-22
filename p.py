@@ -72,25 +72,19 @@ PRODUCTS = {
             "ປອ໋ງ": {"ນ້ອຍ": 115000, "ກາງ": 150000},
             "ແກ້ວ": {"ນ້ອຍ": 90000, "ກາງ": 115000},
         },
-        "ສະຕີງ": {
-            "ຕຸກ": {"ນ້ອຍ": 120000},
-            "ປອ໋ງ": {"ນ້ອຍ": 135000},
-            "ແກ້ວ": {"ນ້ອຍ": 110000},
+        "ສະຕີງ(ແດງ)": {
+            "ຕຸກ": {"ບໍ່ມີຂະໜາດ": 120000},
+            "ປອ໋ງ": {"ບໍ່ມີຂະໜາດ": 135000},
         },
         "M150": {
-            "ຕຸກ": {"ນ້ອຍ": 130000},
-            "ປອ໋ງ": {"ນ້ອຍ": 145000},
-            "ແກ້ວ": {"ນ້ອຍ": 120000},
+            "ຂວດ": {"ບໍ່ມີຂະໜາດ": 145000},
         },
-        "ກະທີງແດງ": {
-            "ຕຸກ": {"ນ້ອຍ": 130000},
-            "ປອ໋ງ": {"ນ້ອຍ": 145000},
-            "ແກ້ວ": {"ນ້ອຍ": 120000},
+        "ສະເວັບ": {
+            "ປອ໋ງ": {"ບໍ່ມີຂະໜາດ": 145000},
         },
         "ສະປອນເຊີ": {
-            "ຕຸກ": {"ນ້ອຍ": 125000},
-            "ປອ໋ງ": {"ນ້ອຍ": 140000},
-            "ແກ້ວ": {"ນ້ອຍ": 115000},
+            "ປອ໋ງ": {"ບໍ່ມີຂະໜາດ": 140000},
+            
         },
     },
     "ນ້ຳດື່ມ": {
@@ -110,6 +104,20 @@ PRODUCTS = {
 # ------------------------------------------------------------
 VIEW_MODES = ["ແບນ/ສະແດງສິນຄ້າທັງໝົດ", "ໝວດໝູ່"]
 PACKAGE_OPTIONS = ["ແພັກ", "ແກັດ", "ລາງ"]
+PACKAGE_OPTIONS_WITHOUT_CRATE = ["ແພັກ", "ແກັດ"]
+NO_SIZE = "ບໍ່ມີຂະໜາດ"
+AUTO_CRATE_PRODUCTS = ["ສະຕີງ(ແດງ)", "M150", "ສະເວັບ", "ສະປອນເຊີ"]
+GLASS_TRAY_PRODUCTS = ["ແປບຊີ", "ໂຄຄາໂຄລາ", "ເຊເວັນອັບ", "ແຟນຕ້າ", "ສະໄປ໋"]
+
+
+# ------------------------------------------------------------
+# ສ່ວນທີ 2.1: list ສຳລັບເກັບຂໍ້ມູນ
+# CUSTOMERS ເກັບຂໍ້ມູນລູກຄ້າ.
+# ORDER_HISTORY ເກັບປະຫວັດການສັ່ງຊື້ແຕ່ລະໃບບິນ.
+# ຂໍ້ມູນນີ້ເກັບໃນ memory ຂະນະທີ່ໂປຣແກຣມກຳລັງແລ່ນ.
+# ------------------------------------------------------------
+CUSTOMERS = []
+ORDER_HISTORY = []
 
 
 # ------------------------------------------------------------
@@ -149,15 +157,14 @@ def choose_from_list(title, options):
         print(f"ກະລຸນາເລືອກ 1 ຫາ {len(options)}.")
 
 
-def choose_size_with_price(title, size_prices, unit_name):
-    """ສະແດງຂະໜາດພ້ອມລາຄາຕໍ່ຫົວໜ່ວຍ ແລ້ວສົ່ງຂະໜາດທີ່ເລືອກກັບຄືນ."""
+def choose_size(title, size_prices):
+    """ສະແດງຂະໜາດໃຫ້ເລືອກ ແລ້ວສົ່ງຂະໜາດທີ່ເລືອກກັບຄືນ."""
     sizes = list(size_prices.keys())
 
     while True:
         print(f"\n{title}")
         for i, size in enumerate(sizes, start=1):
-            price = size_prices[size]
-            print(f"{i}. {size} - {money(price)}/{unit_name}")
+            print(f"{i}. {size}")
 
         choice = input("ເລືອກເລກ: ").strip()
         if not choice.isdigit():
@@ -169,6 +176,11 @@ def choose_size_with_price(title, size_prices, unit_name):
             return sizes[index - 1]
 
         print(f"ກະລຸນາເລືອກ 1 ຫາ {len(sizes)}.")
+
+
+def show_step5_price(unit_price, package_type):
+    """ສະແດງລາຄາສິນຄ້າໃນຂັ້ນຕອນທີ 5 ຕາມປະເພດໄຊ້."""
+    print(f"ລາຄາ: {money(unit_price)}/{package_type}")
 
 
 def input_quantity(unit_name):
@@ -193,6 +205,43 @@ def ask_yes_no(message):
         if answer in ("y", "n"):
             return answer
         print("ກະລຸນາກົດ y ຫຼື n ເທົ່ານັ້ນ.")
+
+
+def save_customer(first_name, last_name):
+    """ສ້າງ dictionary ຂໍ້ມູນລູກຄ້າ ແລ້ວເກັບເຂົ້າ list CUSTOMERS."""
+    customer = {
+        "first_name": first_name,
+        "last_name": last_name,
+        "full_name": f"{first_name} {last_name}",
+    }
+    CUSTOMERS.append(customer)
+    return customer
+
+
+def save_order_history(customer, orders):
+    """ເກັບຂໍ້ມູນໃບບິນ 1 ໃບເຂົ້າ list ORDER_HISTORY."""
+    subtotal = sum(item["total"] for item in orders)
+    rate = discount_rate(subtotal)
+    discount = subtotal * rate
+    final_total = subtotal - discount
+
+    bill_data = {
+        "customer": customer,
+        "orders": orders,
+        "subtotal": subtotal,
+        "discount_rate": rate,
+        "discount": discount,
+        "final_total": final_total,
+    }
+    ORDER_HISTORY.append(bill_data)
+    return bill_data
+
+
+def show_saved_data_count():
+    """ສະແດງຈຳນວນຂໍ້ມູນທີ່ເກັບໄວ້ໃນ list."""
+    print("\nຂໍ້ມູນຖືກເກັບໃນ list ແລ້ວ")
+    print(f"- CUSTOMERS: {len(CUSTOMERS)} ລູກຄ້າ")
+    print(f"- ORDER_HISTORY: {len(ORDER_HISTORY)} ໃບບິນ")
 
 
 # ------------------------------------------------------------
@@ -258,46 +307,69 @@ def choose_product():
     # ແລ້ວກຳນົດ package_type ເປັນ "ແພັກ" ອັດຕະໂນມັດ.
     if category == "ນ້ຳດື່ມ":
         package_type = "ແພັກ"
-        size = choose_size_with_price(
+        size = choose_size(
             "ຂັ້ນຕອນທີ 4: ເລືອກຂະໜາດນ້ຳດື່ມ",
             product_data[package_type],
-            package_type,
         )
+        print(f"\nຂັ້ນຕອນທີ 5: ປະເພດໄຊ້ {package_type}")
+        show_step5_price(product_data[package_type][size], package_type)
     else:
         # ເບຍ ແລະ ນ້ຳອັດລົມ ຕ້ອງເລືອກປະເພດພາຊະນະກ່ອນ.
-        product_type = choose_from_list(
-            "ຂັ້ນຕອນທີ 3: ເລືອກບັນຈຸພັນ",
-            list(product_data.keys()),
-        )
+        if len(product_data) == 1:
+            product_type = list(product_data.keys())[0]
+            print(f"\nຂັ້ນຕອນທີ 3: ບັນຈຸພັນ {product_type}")
+        else:
+            product_type = choose_from_list(
+                "ຂັ້ນຕອນທີ 3: ເລືອກບັນຈຸພັນ",
+                list(product_data.keys()),
+            )
 
         # ກໍລະນີເບຍແກ້ວມີຂະໜາດດຽວ ຈຶ່ງຂ້າມການເລືອກຂະໜາດ.
         if category == "ເບຍ" and product_type == "ແກ້ວ":
             package_type = "ລາງ"
             size = "ມາດຕະຖານ"
-            print(f"\nຂັ້ນຕອນທີ 4: ຂະໜາດ {size} - {money(product_data[product_type][size])}/{package_type}")
+            print(f"\nຂັ້ນຕອນທີ 4: ຂະໜາດ {size}")
+        elif NO_SIZE in product_data[product_type]:
+            # ສິນຄ້າບາງຢ່າງເປັນແກັດ ແລະ ບໍ່ມີຂະໜາດໃຫ້ເລືອກ.
+            package_type = "ແກັດ"
+            size = NO_SIZE
+            print(f"\nຂັ້ນຕອນທີ 4: {size}")
         else:
-            if category == "ເບຍ" and product_type == "ປອ໋ງ":
-                size_unit = "ແກັດ"
-            else:
-                size_unit = "ໜ່ວຍ"
-
-            size = choose_size_with_price(
+            size = choose_size(
                 "ຂັ້ນຕອນທີ 4: ເລືອກຂະໜາດຜະລິດຕະພັນ",
                 product_data[product_type],
-                size_unit,
             )
 
         # ກໍລະນີເບຍ: ກຳນົດປະເພດໄຊ້ໃຫ້ເລີຍຕາມເງື່ອນໄຂ.
         if category == "ເບຍ" and product_type == "ປອ໋ງ":
             package_type = "ແກັດ"
+            print(f"\nຂັ້ນຕອນທີ 5: ປະເພດໄຊ້ {package_type}")
+            show_step5_price(product_data[product_type][size], package_type)
         elif category == "ເບຍ" and product_type == "ແກ້ວ":
             package_type = "ລາງ"
+            print(f"\nຂັ້ນຕອນທີ 5: ປະເພດໄຊ້ {package_type}")
+            show_step5_price(product_data[product_type][size], package_type)
+        elif product_name in AUTO_CRATE_PRODUCTS:
+            package_type = "ແກັດ"
+            print(f"\nຂັ້ນຕອນທີ 5: ປະເພດໄຊ້ {package_type}")
+            show_step5_price(product_data[product_type][size], package_type)
+        elif product_name in GLASS_TRAY_PRODUCTS and product_type == "ແກ້ວ":
+            package_type = "ລາງ"
+            print("\nຂັ້ນຕອນທີ 5: ປະເພດໄຊ້ ລາງ")
+            show_step5_price(product_data[product_type][size], package_type)
+        elif product_name in GLASS_TRAY_PRODUCTS and product_type in ("ຕຸກ", "ປອ໋ງ"):
+            package_type = choose_from_list(
+                "ຂັ້ນຕອນທີ 5: ເລືອກປະເພດໄຊ້",
+                PACKAGE_OPTIONS_WITHOUT_CRATE,
+            )
+            show_step5_price(product_data[product_type][size], package_type)
         else:
             # ນ້ຳອັດລົມໃຫ້ຜູ້ໃຊ້ເລືອກ ແພັກ/ແກັດ/ລາງ.
             package_type = choose_from_list(
                 "ຂັ້ນຕອນທີ 5: ເລືອກປະເພດໄຊ້",
                 PACKAGE_OPTIONS,
             )
+            show_step5_price(product_data[product_type][size], package_type)
 
     # ຫາລາຄາຕໍ່ໜ່ວຍຈາກ PRODUCTS ຕາມສິນຄ້າທີ່ເລືອກ.
     if category == "ນ້ຳດື່ມ":
@@ -343,31 +415,40 @@ def print_bill(first_name, last_name, orders):
     rate = discount_rate(subtotal)
     discount = subtotal * rate
     final_total = subtotal - discount
+    line_width = 86
 
-    print("\n" + "=" * 70)
+    print("\n" + "=" * line_width)
     print("ໃບບິນສູນສົ່ງນ້ຳທຸກປະເພດ")
-    print("=" * 70)
+    print("=" * line_width)
     print(f"ຊື່ລູກຄ້າ: {first_name} {last_name}")
-    print("-" * 70)
-    print(f"{'ລຳດັບ':<6}{'ສິນຄ້າ':<18}{'ປະເພດ':<10}{'ຂະໜາດ':<12}{'ຈຳນວນ':<8}{'ລວມ':>14}")
-    print("-" * 70)
+    print("-" * line_width)
+    print(
+        f"{'ລຳດັບ':<6}"
+        f"{'ສິນຄ້າ':<18}"
+        f"{'ບັນຈຸພັນ':<10}"
+        f"{'ປະເພດໄຊ້':<12}"
+        f"{'ຂະໜາດ':<12}"
+        f"{'ຈຳນວນ':<10}"
+        f"{'ລວມ':>14}"
+    )
+    print("-" * line_width)
 
     for i, item in enumerate(orders, start=1):
-        product_detail = f"{item['product_type']}/{item['package_type']}"
         print(
             f"{i:<6}"
             f"{item['name']:<18}"
-            f"{product_detail:<10}"
+            f"{item['product_type']:<10}"
+            f"{item['package_type']:<12}"
             f"{item['size']:<12}"
-            f"{item['quantity_text']:<8}"
+            f"{item['quantity_text']:<10}"
             f"{money(item['total']):>14}"
         )
 
-    print("-" * 70)
+    print("-" * line_width)
     print(f"ລາຄາລວມກ່ອນຫຼຸດ: {money(subtotal)}")
     print(f"ສ່ວນຫຼຸດ: {int(rate * 100)}% = {money(discount)}")
     print(f"ລາຄາຕ້ອງຈ່າຍທັງໝົດ: {money(final_total)}")
-    print("=" * 70)
+    print("=" * line_width)
     print("ຂອບໃຈທີ່ໃຊ້ບໍລິການ")
 
 
@@ -387,6 +468,7 @@ def main():
     print("\nຂັ້ນຕອນທີ 1: ລັອກອິນຂໍ້ມູນລູກຄ້າ")
     first_name = input_not_empty("ປ້ອນຊື່: ")
     last_name = input_not_empty("ປ້ອນນາມສະກຸນ: ")
+    customer = save_customer(first_name, last_name)
 
     # orders ໃຊ້ເກັບລາຍການສິນຄ້າທີ່ລູກຄ້າເລືອກທັງໝົດ.
     orders = []
@@ -400,7 +482,9 @@ def main():
         if more == "n":
             break
 
+    save_order_history(customer, orders)
     print_bill(first_name, last_name, orders)
+    show_saved_data_count()
 
 
 # ຄຳສັ່ງນີ້ເຮັດໃຫ້ main() ຖືກລັນເມື່ອເປີດໄຟລ໌ນີ້ໂດຍກົງ.
